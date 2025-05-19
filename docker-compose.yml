@@ -1,10 +1,24 @@
-
 services:
+  web:
+    build: .
+    image: api-lost
+    ports:
+      - "5432:5432"
+    environment:
+      DB_ENGINE: django.db.backends.postgresql_psycopg2
+      DB_HOST: postgres-api-lost
+      DB_PORT: 5432
+      DB_NAME: dbLost
+      DB_USER: postgres
+      DB_PASS: 123456
+    depends_on:
+      - postgres-api-lost
+
   postgres-api-lost:
     image: postgres:17
     hostname: postgres-api-lost
     ports:
-      - "9999:5432"
+      - "5432:5432"
     restart: always
     environment:
       - POSTGRES_USER=postgres
