@@ -39,7 +39,7 @@ class CategoryItemSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        exclude = ['password']
+        fields = '__all__'
 
 class UserSignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)

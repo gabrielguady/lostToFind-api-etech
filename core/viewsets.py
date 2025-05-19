@@ -10,7 +10,7 @@ from core import serializers, filters, models, serializers_params, behaviors
 class FileImageViewSet(viewsets.ModelViewSet):
     queryset = models.FileImageItem.objects.all()
     serializer_class = serializers.FileImageSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -100,7 +100,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
     queryset = models.Category.objects.all()
     serializer_class = serializers.CategoryItemSerializer
     filterset_class = filters.ItemCategoryFilter
-    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class UserViewSet(viewsets.ModelViewSet):
