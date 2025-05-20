@@ -3,7 +3,7 @@ services:
     build: .
     image: api-lost
     ports:
-      - "5432:5432"
+      - "8000:8000"
     environment:
       DB_ENGINE: django.db.backends.postgresql_psycopg2
       DB_HOST: postgres-api-lost
