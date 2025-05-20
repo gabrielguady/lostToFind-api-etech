@@ -1,5 +1,5 @@
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import PermissionsMixin, AbstractUser
 from django.db import models
 
 from api_lost import settings
@@ -170,48 +170,7 @@ class FoundItem(ModelBase):
         managed = True
 
 
-class User(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(
-        db_column='tx_username',
-        null=False,
-        max_length=64,
-        unique=True,
-    )
-    password = models.CharField(
-        db_column='tx_password',
-        null=False,
-        max_length=104,
-    )
-    email = models.CharField(
-        db_column='tx_email',
-        null=True,
-        max_length=256,
-    )
-    last_login = models.DateTimeField(
-        db_column='dt_last_login',
-        null=True,
-    )
-    is_active = models.BooleanField(
-        db_column='cs_active',
-        null=False,
-        default=True,
-    )
-    is_superuser = models.BooleanField(
-        db_column='cs_superuser',
-        null=True,
-        default=False,
-    )
-    is_staff = models.BooleanField(
-        db_column='cs_staff',
-        null=True,
-        default=False,
-    )
-
-    objects = UserManager()
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = []
-
+class User(AbstractUser):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
