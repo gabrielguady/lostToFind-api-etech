@@ -143,7 +143,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'core.User'
 
-ALLOWED_HOSTS=['*']
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -164,6 +164,12 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS=True
 CORS_ALLOW_METHODS = default_methods
 CORS_ALLOW_CREDENTIALS = True
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '18.231.173.165',  # ← Adicione o IP público aqui
+]
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
