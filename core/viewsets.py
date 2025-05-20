@@ -39,27 +39,6 @@ class LostItemViewSet(viewsets.ModelViewSet):
     filterset_class = filters.LostItemFilter
     permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        user = self.request.user
-        serializer.save(user=user)
-
-    def perform_update(self, serializer):
-        user = self.request.user
-        serializer.save(user=user)
-
-    def get_queryset(self):
-        user_id = self.request.query_params.get('user_id', None)
-
-        if user_id:
-            try:
-                user_id = int(user_id)  # Tenta converter user_id para inteiro
-                return models.LostItem.objects.filter(user_id=user_id)
-            except ValueError:
-                # Caso o user_id não possa ser convertido para inteiro, retorna uma lista vazia
-                return models.LostItem.objects.none()
-
-        return models.LostItem.objects.all()
-
     @action(methods=['POST'], detail=False, parser_classes=[MultiPartParser])
     def upload_file(self, request, *args, **kwargs):
         serializer = serializers_params.FileImageItemSerializerParam(data=request.data)
@@ -76,14 +55,6 @@ class FoundItemViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FoundItemSerializer
     filterset_class = filters.FoundItemFilter
     permission_classes = [AllowAny]
-
-    def perform_create(self, serializer):
-        user = self.request.user
-        serializer.save(user=user)
-
-    def perform_update(self, serializer):
-        user = self.request.user
-        serializer.save(user=user)
 
     @action(methods=['POST'], detail=False, parser_classes=[MultiPartParser])
     def upload_file(self, request, *args, **kwargs):
