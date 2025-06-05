@@ -1,10 +1,11 @@
+#version: "3.9"
 
 services:
   postgres-api-lost:
     image: postgres:17
     hostname: postgres-api-lost
     ports:
-      - "9999:5432"
+      - "5435:5432"
     restart: always
     environment:
       - POSTGRES_USER=postgres
@@ -39,6 +40,25 @@ services:
     depends_on:
       - postgres-api-lost
 
+  api-lost:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-lost
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres-api-lost
+    environment:
+      - DB_NAME=dbLost
+      - DB_USER=postgres
+      - DB_PASSWORD=123456
+      - DB_HOST=postgres-api-lost
+      - DB_PORT=5432
+      - DEBUG=True
 
 volumes:
   db-data:

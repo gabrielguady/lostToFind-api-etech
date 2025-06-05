@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from core import serializers, filters, models, serializers_params, behaviors
@@ -38,27 +38,6 @@ class LostItemViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.LostItemSerializer
     filterset_class = filters.LostItemFilter
     permission_classes = [AllowAny]
-
-    def perform_create(self, serializer):
-        user = self.request.user
-        serializer.save(user=user)
-
-    def perform_update(self, serializer):
-        user = self.request.user
-        serializer.save(user=user)
-
-    def get_queryset(self):
-        user_id = self.request.query_params.get('user_id', None)
-
-        if user_id:
-            try:
-                user_id = int(user_id)  # Tenta converter user_id para inteiro
-                return models.LostItem.objects.filter(user_id=user_id)
-            except ValueError:
-                # Caso o user_id não possa ser convertido para inteiro, retorna uma lista vazia
-                return models.LostItem.objects.none()
-
-        return models.LostItem.objects.all()
 
     @action(methods=['POST'], detail=False, parser_classes=[MultiPartParser])
     def upload_file(self, request, *args, **kwargs):
@@ -106,3 +85,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
+
+    def get_permissions(self):
+        if self.action in ['create']:
+            return [AllowAny()]
+        return [IsAuthenticated()]

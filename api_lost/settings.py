@@ -34,7 +34,6 @@ SECRET_KEY = 'django-insecure-g2ru(&*$9y8y%cv50$32(9h)_f5!=ew5v0nb=%kudvn7i8b2%k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -86,7 +85,6 @@ WSGI_APPLICATION = 'api_lost.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('DB_ENGINE'),
@@ -98,7 +96,6 @@ DATABASES = {
 
     },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -117,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

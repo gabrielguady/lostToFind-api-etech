@@ -1,14 +1,17 @@
 from rest_framework import routers
-
-from core import viewsets
+from core.viewsets import (
+    LostItemViewSet,
+    FoundItemViewSet,
+    CategoryViewSet,
+    FileImageViewSet,
+    UserViewSet
+)
 
 router = routers.DefaultRouter()
+router.register('lost-items', LostItemViewSet, basename='lost-items')
+router.register('found-items', FoundItemViewSet, basename='found-items')
+router.register('categories', CategoryViewSet, basename='categories')
+router.register('file-images', FileImageViewSet, basename='file-images')
+router.register('user', UserViewSet, basename='user')
 
-
-router.register('lost_item', viewsets.LostItemViewSet)
-
-router.register('found_item', viewsets.FoundItemViewSet)
-router.register('category',viewsets.CategoryViewSet)
-router.register('file_image', viewsets.FileImageViewSet)
-router.register('user', viewsets.UserViewSet)
 urlpatterns = router.urls
