@@ -37,7 +37,7 @@ class LostItemViewSet(viewsets.ModelViewSet):
     queryset = models.LostItem.objects.all()
     serializer_class = serializers.LostItemSerializer
     filterset_class = filters.LostItemFilter
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     @action(methods=['POST'], detail=False, parser_classes=[MultiPartParser])
     def upload_file(self, request, *args, **kwargs):
@@ -54,7 +54,7 @@ class FoundItemViewSet(viewsets.ModelViewSet):
     queryset = models.FoundItem.objects.all()
     serializer_class = serializers.FoundItemSerializer
     filterset_class = filters.FoundItemFilter
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         user = self.request.user
