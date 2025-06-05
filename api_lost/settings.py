@@ -186,6 +186,7 @@ SIMPLE_JWT = {
     'JTI_CLAIM': 'jti',
 }
 
+ALLOWED_HOSTS = ['*']
 
 
 
