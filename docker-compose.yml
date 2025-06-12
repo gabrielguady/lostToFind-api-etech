@@ -1,18 +1,18 @@
 #version: "3.9"
 
 services:
-  postgres-api-lost:
-    image: postgres:17
-    hostname: postgres-api-lost
-    ports:
-      - "5435:5432"
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=dbLost
-      - POSTGRES_PASSWORD=123456
-    volumes:
-      - db-data:/var/lib/postgresql/data
+#  postgres-api-lost:
+#    image: postgres:17
+#    hostname: postgres-api-lost
+#    ports:
+#      - "5435:5432"
+#    restart: always
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_DB=dbLost
+#      - POSTGRES_PASSWORD=123456
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
 
   minio-api:
     hostname: minio-api-lost

@@ -1,5 +1,17 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
 from core import models
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        # Adicione campos extras ao token aqui:
+        token['username'] = user.username
+
+        return token
+
 
 class FileImageSerializer(serializers.ModelSerializer):
     class Meta:
