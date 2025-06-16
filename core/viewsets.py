@@ -39,6 +39,14 @@ class LostItemViewSet(viewsets.ModelViewSet):
     filterset_class = filters.LostItemFilter
     permission_classes = [IsAuthenticated]
 
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
+
+    def perform_update(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
+
     @action(methods=['POST'], detail=False, parser_classes=[MultiPartParser])
     def upload_file(self, request, *args, **kwargs):
         serializer = serializers_params.FileImageItemSerializerParam(data=request.data)
@@ -77,9 +85,25 @@ class FoundItemViewSet(viewsets.ModelViewSet):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = models.Category.objects.all()
-    serializer_class = serializers.CategoryItemSerializer
-    filterset_class = filters.ItemCategoryFilter
+    serializer_class = serializers.CategorySerializer
+    filterset_class = filters.CategoryFilter
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = models.Comment.objects.all()
+    serializer_class = serializers.CommentSerializer
+    filterset_class = filters.CommentFilter
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    ordering = ('-created_at',)
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
+
+    def perform_update(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
 
 
 class UserViewSet(viewsets.ModelViewSet):
