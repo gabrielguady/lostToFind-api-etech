@@ -171,11 +171,6 @@ class FoundItem(ModelBase):
 
 class User(AbstractUser):
 
-    class email:
-        db_column = 'tx_description',
-        null = False,
-        max_length = 50,
-
     class phone:
         db_column = 'tx_phone',
         null = False,
