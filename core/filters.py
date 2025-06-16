@@ -9,11 +9,12 @@ STARTS_WITH = 'startswith'
 GT = 'gt'
 GTE = 'gte'
 
+
 class LostItemFilter(filters.FilterSet):
     title = filters.CharFilter(lookup_expr=ICONTAINS)
     last_seen_details = filters.CharFilter(lookup_expr=ICONTAINS)
     city = filters.CharFilter(lookup_expr=ICONTAINS)
-    category_name = filters.CharFilter(field_name='category__name',lookup_expr=ICONTAINS)
+    category_name = filters.CharFilter(field_name='category__name', lookup_expr=ICONTAINS)
 
     class Meta:
         model = models.LostItem
@@ -31,9 +32,21 @@ class FoundItemFilter(filters.FilterSet):
         model = models.FoundItem
         fields = ['title', 'description', 'category_name', 'city', 'id_user']
 
-class ItemCategoryFilter(filters.FilterSet):
+
+class CategoryFilter(filters.FilterSet):
     items = filters.CharFilter(lookup_expr='icontains')
+
     class Meta:
         model = models.Category
         fields = ['items']
 
+
+class CommentFilter(filters.FilterSet):
+    found_item = filters.NumberFilter(lookup_expr='exact')
+    lost_item = filters.NumberFilter(lookup_expr='exact')
+    comment = filters.NumberFilter(lookup_expr='exact')
+    not_comment = filters.BooleanFilter(field_name='comment', lookup_expr='isnull')
+
+    class Meta:
+        model = models.Comment
+        fields = ['found_item', 'lost_item', 'comment', 'not_comment']

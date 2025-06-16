@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.12 (api_lost)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13 (lostToFind-api-etech)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (lost-to-find-api)" project-jdk-type="Python SDK" />
 </project>

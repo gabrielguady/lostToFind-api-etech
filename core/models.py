@@ -115,7 +115,7 @@ class LostItem(ModelBase):
         on_delete=models.CASCADE,
         null=False,
         default='1',
-        related_name = 'item_lost'
+        related_name='item_lost'
     )
 
     class Meta:
@@ -170,12 +170,6 @@ class FoundItem(ModelBase):
 
 
 class User(AbstractUser):
-
-    class email:
-        db_column = 'tx_description',
-        null = False,
-        max_length = 50,
-
     class phone:
         db_column = 'tx_phone',
         null = False,
@@ -184,3 +178,47 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
+
+
+class Comment(ModelBase):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        db_column='id_user',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='comments'
+    )
+    lost_item = models.ForeignKey(
+        to='LostItem',
+        on_delete=models.CASCADE,
+        db_column='id_lost_item',
+        null=True,
+        blank=True,
+        related_name='comments'
+    )
+    found_item = models.ForeignKey(
+        to='FoundItem',
+        on_delete=models.CASCADE,
+        db_column='id_found_item',
+        null=True,
+        blank=True,
+        related_name='comments'
+    )
+    comment = models.ForeignKey(
+        to='Comment',
+        on_delete=models.CASCADE,
+        db_column='id_comment',
+        null=True,
+        blank=True,
+        related_name='comments'
+    )
+    text = models.TextField(
+        db_column='tx_text',
+        null=False,
+        max_length=500,
+    )
+
+    class Meta:
+        db_table = 'comment'
+        managed = True
