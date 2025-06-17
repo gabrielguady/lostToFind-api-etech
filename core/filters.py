@@ -15,10 +15,11 @@ class LostItemFilter(filters.FilterSet):
     last_seen_details = filters.CharFilter(lookup_expr=ICONTAINS)
     city = filters.CharFilter(lookup_expr=ICONTAINS)
     category_name = filters.CharFilter(field_name='category__name', lookup_expr=ICONTAINS)
+    user = filters.NumberFilter(field_name='user', lookup_expr=EQUALS)
 
     class Meta:
         model = models.LostItem
-        fields = ['last_seen_details', 'title', 'category_name', 'city']
+        fields = ['last_seen_details', 'title', 'category_name', 'city', 'user']
 
 
 class FoundItemFilter(filters.FilterSet):
@@ -26,11 +27,11 @@ class FoundItemFilter(filters.FilterSet):
     description = filters.CharFilter(lookup_expr=ICONTAINS)
     category_name = filters.CharFilter(field_name='category__name', lookup_expr=ICONTAINS)
     city = filters.CharFilter(lookup_expr=ICONTAINS)
-    id_user = filters.NumberFilter(lookup_expr=EQUALS)
+    user = filters.NumberFilter(field_name='user', lookup_expr=EQUALS)
 
     class Meta:
         model = models.FoundItem
-        fields = ['title', 'description', 'category_name', 'city', 'id_user']
+        fields = ['title', 'description', 'category_name', 'city', 'user']
 
 
 class CategoryFilter(filters.FilterSet):
