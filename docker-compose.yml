@@ -1,22 +1,22 @@
 #version: "3.9"
 
 services:
-#  postgres-api-lost:
-#    image: postgres:17
-#    hostname: postgres-api-lost
-#    ports:
-#      - "5435:5432"
-#    restart: always
-#    environment:
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_DB=dbLost
-#      - POSTGRES_PASSWORD=123456
-#    volumes:
-#      - db-data:/var/lib/postgresql/data
+  postgres-api-lost:
+    image: postgres:17
+    hostname: postgres-api-lost
+    ports:
+      - "5435:5432"
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=dbLost
+      - POSTGRES_PASSWORD=123456
+    volumes:
+      - db-data:/var/lib/postgresql/data
 
   minio-api:
     hostname: minio-api-lost
-    image: 'minio/minio:latest'
+    image: 'minio/minio:RELEASE.2025-04-22T22-12-26Z'
     container_name: minio
     restart: always
     ports:
@@ -40,24 +40,24 @@ services:
     depends_on:
       - postgres-api-lost
 
-  api-lost:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: api-lost
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - postgres-api-lost
-    environment:
-      - DB_NAME=dbLost
-      - DB_USER=postgres
-      - DB_PASSWORD=123456
-      - DB_HOST=postgres-api-lost
-      - DB_PORT=5432
-      - DEBUG=True
+#  api-lost:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: api-lost
+#    volumes:
+#      - .:/app
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - postgres-api-lost
+#    environment:
+#      - DB_NAME=dbLost
+#      - DB_USER=postgres
+#      - DB_PASSWORD=123456
+#      - DB_HOST=postgres-api-lost
+#      - DB_PORT=5432
+#      - DEBUG=True
 
 volumes:
   db-data:
