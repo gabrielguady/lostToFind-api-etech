@@ -4,7 +4,7 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from core import serializers, filters, models, serializers_params, behaviors
+from core import serializers, filters, models, serializers_params, behaviors, generative
 
 
 class FileImageViewSet(viewsets.ModelViewSet):
@@ -81,6 +81,17 @@ class FoundItemViewSet(viewsets.ModelViewSet):
         response = behavior.run()
 
         return Response(data=response, status=status.HTTP_201_CREATED)
+
+    @action(methods=['POST'], detail=False)
+    def search_ai(self, request, *args, **kwargs):
+        serializer = serializers_params.SearchAISerializerParam(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        behavior = generative.GoogleGenerativeFilter(**serializer.validated_data)
+        response = behavior.run()
+
+        serializer = serializers.FoundItemSerializer(response, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
