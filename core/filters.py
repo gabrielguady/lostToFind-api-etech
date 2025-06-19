@@ -50,6 +50,20 @@ class FoundItemFilter(filters.FilterSet):
     category_name = filters.CharFilter(field_name='category__name', lookup_expr=LIKE)
     city = filters.CharFilter(lookup_expr=LIKE)
     user = filters.NumberFilter(field_name='user', lookup_expr=EQUALS)
+    search = filters.CharFilter(method='filter_search')
+
+    @staticmethod
+    def filter_search(queryset, name, value):
+        """
+        Custom filter to search across multiple fields.
+        """
+        return queryset.filter(
+            Q(title__unaccent__icontains=value) |
+            Q(description__unaccent__icontains=value) |
+            Q(city__unaccent__icontains=value) |
+            Q(category__name__unaccent__icontains=value)
+        )
+
 
     class Meta:
         model = models.FoundItem
