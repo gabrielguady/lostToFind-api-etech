@@ -55,7 +55,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=123456
       - DB_HOST=postgres-api-lost
-      - DB_PORT=5435
+      - DB_PORT=5432
       - DEBUG=True
 
 volumes:
