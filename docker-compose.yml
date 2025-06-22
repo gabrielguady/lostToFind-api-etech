@@ -10,39 +10,40 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=dbLost
-      - POSTGRES_PASSWORD=123456
+      - POSTGRES_PASSWORD=fpf2025speed
     volumes:
       - db-data:/var/lib/postgresql/data
 
-#  minio-api:
-#    hostname: minio-api-lost
-#    image: 'minio/minio:RELEASE.2025-04-22T22-12-26Z'
-#    container_name: minio
-#    restart: always
-#    ports:
-#      - '9000:9000'
-#      - '9001:9001'
-#    volumes:
-#      - minio-data-lost:/data
-#    environment:
-#      MINIO_ROOT_USER: minio
-#      MINIO_ROOT_PASSWORD: minio123
-#    command: server /data --console-address ":9001"
+  minio-api:
+    hostname: minio-api-lost
+    image: 'minio/minio:RELEASE.2025-04-22T22-12-26Z'
+    container_name: minio
+    restart: always
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - minio-data-lost:/data
+    environment:
+      MINIO_ROOT_USER: lost-speed
+      MINIO_ROOT_PASSWORD: 2025speedlost
+    command: server /data --console-address ":9001"
 
-#  pgadmin-api-lost:
-#    image: dpage/pgadmin4
-#    restart: always
-#    environment:
-#      PGADMIN_DEFAULT_EMAIL: "user@gmail.com"
-#      PGADMIN_DEFAULT_PASSWORD: "admin"
-#    ports:
-#      - "16543:80"
-#    depends_on:
-#      - postgres-api-lost
+  pgadmin-api-lost:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "user@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres-api-lost
 
   api-lost:
     build:
       context: .
+      dockerfile: Dockerfile
     container_name: api-lost
     volumes:
       - .:/app
@@ -53,10 +54,19 @@ services:
     environment:
       - DB_NAME=dbLost
       - DB_USER=postgres
-      - DB_PASSWORD=123456
+      - DB_PASSWORD=fpf2025speed
       - DB_HOST=postgres-api-lost
       - DB_PORT=5432
       - DEBUG=True
+
+  lost-web:
+    build:
+      context: 'C:\Users\blonded\WebstormProjects\lostToFindFrontend\front-end-lostToFind'
+      dockerfile: Dockerfile
+    container_name: lost-web
+    restart: always
+    ports:
+      - "4200:80"
 
 volumes:
   db-data:
